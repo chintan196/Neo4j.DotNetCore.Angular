@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetCore.Neo4j.Angular.Api", "DotnetCore.Neo4j.Angular.Api\DotnetCore.Neo4j.Angular.Api.csproj", "{57C43311-F26C-47C7-AC4C-F3FC9610E2D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetCore.Neo4j.Angular.Entities", "DotnetCore.Neo4j.Angular.Entities\DotnetCore.Neo4j.Angular.Entities.csproj", "{6C17BA8B-CA4C-49F7-B9B1-5360CAD7560E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetCore.Neo4j.Angular.DataAccess", "DotnetCore.Neo4j.Angular.DataAccess\DotnetCore.Neo4j.Angular.DataAccess.csproj", "{8834C308-9D84-409D-AA33-136192E6424C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57C43311-F26C-47C7-AC4C-F3FC9610E2D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57C43311-F26C-47C7-AC4C-F3FC9610E2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57C43311-F26C-47C7-AC4C-F3FC9610E2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57C43311-F26C-47C7-AC4C-F3FC9610E2D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C17BA8B-CA4C-49F7-B9B1-5360CAD7560E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C17BA8B-CA4C-49F7-B9B1-5360CAD7560E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C17BA8B-CA4C-49F7-B9B1-5360CAD7560E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C17BA8B-CA4C-49F7-B9B1-5360CAD7560E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8834C308-9D84-409D-AA33-136192E6424C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8834C308-9D84-409D-AA33-136192E6424C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8834C308-9D84-409D-AA33-136192E6424C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8834C308-9D84-409D-AA33-136192E6424C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {13C63C2B-FF05-4CE1-9A06-B64636CACD5E}
+	EndGlobalSection
+EndGlobal
