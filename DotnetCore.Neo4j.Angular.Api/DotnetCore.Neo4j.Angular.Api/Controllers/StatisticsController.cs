@@ -1,4 +1,4 @@
-﻿using DotnetCore.Neo4j.Angular.DataAccess.Neo4j;
+﻿using DotnetCore.Neo4j.Angular.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetCore.Neo4j.Angular.Api.Controllers
