@@ -1,0 +1,20 @@
+.table-container {
+    overflow: auto;
+  }
+
+table {
+    width: 100%;
+}
+
+.mat-row:nth-child(odd){
+    background-color: rgba(0,0,0,0.05);
+}
+
+.mat-row:hover {
+    background-color:  rgba(0,0,0,0.2);
+  }
+
+.column-header
+{
+  margin-top: 10px;
+}

@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.search-control { width:100%; }
+.form-field-control { width:100%; }
+.form-control:focus
+{
+    box-shadow: none;
+}
+
+hr
+{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.mat-dialog-content {
+    max-height: calc(100vh - 20vh) !important;
+}

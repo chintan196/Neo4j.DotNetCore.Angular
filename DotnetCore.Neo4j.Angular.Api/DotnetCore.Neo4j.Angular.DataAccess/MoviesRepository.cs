@@ -95,19 +95,19 @@ namespace DotnetCore.Neo4j.Angular.DataAccess
 
             var filter = new StringBuilder(@" WHERE 1 = 1 ");
 
-            if (filterObject.Director != null && !string.IsNullOrWhiteSpace(filterObject.Director.Name))
+            if (filterObject.Director != null && !string.IsNullOrWhiteSpace(filterObject.Director?.Name))
             {                
                 filter.Append(" AND toUpper(dir.name) CONTAINS toUpper($director)");
                 parameters.Add("director", filterObject.Director.Name);
             }
 
-            if (filterObject.Writer != null && !string.IsNullOrWhiteSpace(filterObject.Writer.Name))
+            if (filterObject.Writer != null && !string.IsNullOrWhiteSpace(filterObject.Writer?.Name))
             {
                 filter.Append(" AND toUpper(w.name) CONTAINS toUpper($writer)");
                 parameters.Add("writer", filterObject.Writer.Name);
             }
 
-            if (filterObject.Producer != null && !string.IsNullOrWhiteSpace(filterObject.Producer.Name))
+            if (filterObject.Producer != null && !string.IsNullOrWhiteSpace(filterObject.Producer?.Name))
             {
                 filter.Append(" AND toUpper(prod.name) CONTAINS toUpper($producer)");
                 parameters.Add("producer", filterObject.Producer.Name);

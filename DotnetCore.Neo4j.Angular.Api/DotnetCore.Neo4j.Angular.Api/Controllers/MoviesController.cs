@@ -26,7 +26,7 @@ namespace DotnetCore.Neo4j.Angular.Api.Controllers
         /// <returns>ActionResult&lt;MoviesListResult&gt;.</returns>
         [HttpPost]
         [Route("searchbyfilter")]
-        public async Task<ActionResult<MovieListResult>> SearchMoviesByFilter(MoviesFilter filterObject)
+        public async Task<ActionResult<MovieListResult>> SearchMoviesByFilter([FromBody] MoviesFilter filterObject)
         {
             _logger.LogInformation("Getting movies list data by filter");
             return await _moviesRepository.SearchMoviesByFilter(filterObject);

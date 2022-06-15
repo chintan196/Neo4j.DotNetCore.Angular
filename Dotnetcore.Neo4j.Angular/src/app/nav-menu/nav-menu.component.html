@@ -1,0 +1,55 @@
+<header>
+    <nav
+      class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+      <div class="container" style="height: 70px;">
+        <a class="navbar-brand pull-left" [routerLink]="['/']">
+          <div class="d-none d-lg-block">
+            <img src="assets/images/Neo4j-logo_color.png" height="72" width="200" style="margin-left: -15px !important;">
+            Dotnet Core Neo4j Angular
+          </div>
+          <div class="d-lg-none">
+            <img src="assets/images/Neo4j-logo_color.png" height="62" width="170" style="margin-left: -15px !important;">
+            Movies Application
+          </div>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target=".navbar-collapse"
+          aria-label="Toggle navigation"
+          [attr.aria-expanded]="isExpanded"
+          (click)="toggle()"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
+          [ngClass]="{ show: isExpanded }"
+        >
+          <ul class="navbar-nav flex-grow">
+            <li
+              class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a class="nav-link text-dark" [routerLink]="['/']">Statistics</a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Data</a
+              >
+            </li>
+            <li class="nav-item dropdown">            
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"><i class="fa fa-user"></i>User &nbsp;</a>
+              <div class="dropdown-menu" style="padding-left: 10px; padding-right: 10px;">
+                {{ user.userName }}
+                <!-- <div class="dropdown-divider"></div>
+                User Role or Group can be show if available -->
+              </div>          
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  

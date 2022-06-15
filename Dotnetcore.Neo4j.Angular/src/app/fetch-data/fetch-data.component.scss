@@ -1,0 +1,59 @@
+table {
+    width: 100%;
+}
+
+.table-container {
+    max-height: 545px;
+    overflow: auto;
+  }
+
+.mat-row:nth-child(odd){
+    background-color: rgba(0,0,0,0.05);
+}
+
+.mat-row:hover {    
+    background-color:  rgba(0,0,0,0.2);
+  }
+
+.column-header
+{
+  margin-top: 10px;
+}
+
+.search-panel
+{
+  margin-bottom: 8px;
+}
+
+.movie-title-detail
+{
+  text-decoration:underline;
+  cursor: pointer;
+}
+
+::ng-deep .mat-form-field-wrapper
+{
+  padding-bottom: 0.5em;
+}
+
+::ng-deep .mat-form-field-underline
+{
+  bottom: 0.34375em;
+}
+
+::ng-dep .mat-form-field-label-wrapper
+{
+  top: -1em
+}
+
+.search-button
+{
+  width: 45%; height: 60%;  
+}
+
+.search-column
+{
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align:right;
+}

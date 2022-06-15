@@ -1,0 +1,61 @@
+<div class="mat-elevation-z8">
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>  
+    <mat-grid-list [cols]="breakpoint" [rowHeight]="cardRowHeight" (window:resize)="onResize($event)">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="dashboard-card">
+          <mat-card-content class="dashboard-card-content">
+              <div class="counter-box">
+                <div class="counter-inner">
+                  <i class="fa fa-film"></i> <span class="counter">{{moviesCount}}</span>
+                  <p>Movies</p>
+                </div>
+              </div>               
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>    
+      <mat-grid-tile [colspan]="pieChartColSpan" [rowspan]="1">
+        <mat-card class="dashboard-card">
+          <mat-card-content class="dashboard-card-content">
+            <div class="chart-title">
+              <p>Chart 1</p>
+            </div>
+            <div class="flex">
+              <div class="flex-item">
+                <div style="display: block;">
+                    <!-- Chart 1 goes here -->
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="dashboard-card">
+          <mat-card-content class="dashboard-card-content">
+            <div class="counter-box">
+              <div class="counter-inner">
+                <i class="fa fa-user"></i> <span class="counter">{{personsCount}}</span>
+                <p>Persons</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>    
+      <mat-grid-tile [colspan]="lineChartColSpan" [rowspan]="1">
+        <mat-card class="dashboard-card">
+          <mat-card-content class="dashboard-card-content">
+            <div class="chart-title">
+              <p>Chart 2</p>
+            </div>
+            <div class="flex">
+              <div class="flex-item">
+                <div style="display: block;">
+                    <!-- Chart 2 goes here -->
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>  

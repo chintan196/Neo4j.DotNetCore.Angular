@@ -1,0 +1,124 @@
+<h2 id="tableLabel" style="margin: 0 0 8px;">
+    <div class="container">
+      <div class="row">
+        <div class="col" style="padding-left:0px;">Search Movies</div>
+        <div class="col" style="padding-right:0px;">
+          <button style="border:none; background:none; float:right;" (click)="openNewMovieDialog()"><img src="assets/images/add-new.png" height="40" width="40" title="New Movie"></button>
+        </div>
+      </div>
+    </div>
+    </h2>
+    <div class="mat-elevation-z8 search-panel">
+        <div class="container">
+          <div class="row" style="padding-top: 5px;">
+            <div class="col">
+                <mat-form-field  appearance="outline" class="search-control">
+                    <mat-label>Movie Title</mat-label>
+                    <input type="text" class="form-control form-field" matInput [(ngModel)]="filterObject.title">
+                    <button *ngIf="filterObject.title" matSuffix mat-icon-button aria-label="Clear" (click)="filterObject.title=''">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field  appearance="outline" class="search-control">
+                    <mat-label>Released Year</mat-label>
+                    <input type="text" class="form-control form-field" matInput [(ngModel)]="filterObject.released">
+                    <button *ngIf="filterObject.released" matSuffix mat-icon-button aria-label="Clear" (click)="filterObject.released">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field  appearance="outline" class="search-control">
+                <mat-label>Person Type</mat-label>
+                <mat-select [(ngModel)]="filterObject.personType">
+                  <mat-option *ngFor="let personType of masterData.personTypes" [value]="personType">{{personType}}</mat-option>
+                </mat-select>
+                <button *ngIf="filterObject.personType != null" matSuffix mat-icon-button aria-label="Clear" (click)="filterObject.personType==null">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <div class="col">
+                <app-auto-complete-search #agentSearch [searchApiUrl]="personSearchUrl" controlLabel="Agent Name" formFieldClass="search-control" [(value)]="filterObject.person">
+                </app-auto-complete-search>
+            </div>
+          </div>
+          <div class="row" style="padding-top: 5px;">
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+            <div class="col search-column">
+              <button mat-raised-button color="primary" class="search-button" (click)="sarchClickEvent($event)" [disabled]="isLoading">Search</button>
+              &nbsp;&nbsp;
+              <button mat-raised-button class="search-button" (click)="clearClickEvent($event)" [disabled]="isLoading">Clear</button>
+            </div>
+          </div>    
+        </div>
+      </div>
+      <div class="mat-elevation-z8">
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>  
+        <div class="table-container">  
+          <table mat-table [dataSource]="movies" matSort (matSortChange)="sortData($event)" matSortActive="timeframe" matSortDirection="desc" matSortDisableClear>
+            <ng-container matColumnDef="bloomView">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 10px;">
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 10px;">
+                <button style="border:none; background:none;"><img src="assets/images/neo4j-icon-color.png" height="40" width="40" (click)="openBloomView(element)" title="Bloom explore - Graph view"></button>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Movie Title         
+              </th>
+              <td mat-cell *matCellDef="let element"><div class="movie-title-detail" title="Movie Title or Name">{{element.title}}</div></td>
+            </ng-container>
+            
+            <ng-container matColumnDef="released">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Release Year
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.released}} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="tagLine">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Tagline
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.tagLine}} </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="director">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Director(s)
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.director}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="producer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Producers(s)
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.producer}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="writer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Writer(s)
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.writer}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRecord(row)"></tr> -->
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+      </div>
+        <mat-paginator #paginator [length]="totalRows" [pageIndex]="searchObject.currentPage" [pageSize]="searchObject.pageSize"
+          [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page">
+        </mat-paginator>
+      </div>

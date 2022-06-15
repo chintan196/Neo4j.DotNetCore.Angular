@@ -1,0 +1,15 @@
+<mat-form-field  appearance="outline" [class]="formFieldClass">
+    <mat-label>{{controlLabel}}</mat-label>
+    <input matInput class="form-control form-field" aria-label="State" [formControl]="searchControl" [matAutocomplete]="auto">
+    <button *ngIf="value.name" matSuffix mat-icon-button aria-label="Clear" (click)="clearValue($event)">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onSelectionChanged($event)">
+      <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+      <ng-container *ngIf="!isLoading">
+        <mat-option *ngFor="let object of filteredObjects" [value]="object">
+          <span>{{object.name}}</span>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+  </mat-form-field>
