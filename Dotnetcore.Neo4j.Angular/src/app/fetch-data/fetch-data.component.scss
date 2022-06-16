@@ -5,15 +5,15 @@ table {
 .table-container {
     max-height: 545px;
     overflow: auto;
-  }
+}
 
 .mat-row:nth-child(odd){
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(170, 107, 230, 0.05);
 }
 
 .mat-row:hover {    
-    background-color:  rgba(0,0,0,0.2);
-  }
+    background-color:  rgba(149, 158, 211, 0.2);
+}
 
 .column-header
 {
@@ -56,4 +56,8 @@ table {
     margin-top: auto;
     margin-bottom: auto;
     text-align:right;
+}
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+  padding: 10px;
 }

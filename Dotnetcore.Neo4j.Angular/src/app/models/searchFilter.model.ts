@@ -34,14 +34,20 @@
       else if (filter.personType == "Writer")
       {
         this.producer = null
-        this.writer = this.person;
+        this.writer = filter.person;
         this.director = null;        
       }
-      else
+      else if (filter.personType == "Director")
       {
         this.producer = null
         this.writer = null;
-        this.director = this.person;
+        this.director = filter.person;
+      }
+      else if (filter.person.name != '' && filter.person.name != null)
+      {
+        this.producer = filter.person;
+        this.writer = filter.person;
+        this.director = filter.person;
       }
 
       this.pageSize = filter.pageSize;

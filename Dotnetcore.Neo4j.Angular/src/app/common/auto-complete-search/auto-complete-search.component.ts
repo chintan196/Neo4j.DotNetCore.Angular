@@ -44,7 +44,7 @@ ngOnInit(): void {
           this.errorMsg = "";
           this.filteredObjects = [];
           this.isLoading = true;
-          this.value = (this.searchControl && this.searchControl.value && this.searchControl.value.id) ? this.searchControl.value : { id:"", name: this.searchControl.value };
+          this.value = (this.searchControl && this.searchControl.value && this.searchControl.value.born) ? this.searchControl.value : { born:null, name: this.searchControl.value };
           this.valueChange.emit(this.value);
         }),
         switchMap((text) => { 
@@ -92,7 +92,7 @@ ngOnInit(): void {
   {
     if(event?.option?.value != null || event?.option?.value != null)
     {
-      this.value = event?.option?.value ? { id: event?.option?.value.id, name: event?.option?.value.name } : {};
+      this.value = event?.option?.value ? { born: event?.option?.value.born, name: event?.option?.value.name } : {};
       this.valueChange.emit(this.value);
     }
   }

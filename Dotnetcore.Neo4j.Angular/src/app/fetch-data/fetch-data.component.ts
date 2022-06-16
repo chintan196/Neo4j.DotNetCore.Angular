@@ -94,7 +94,7 @@ export class FetchDataComponent implements OnInit {
      director: [],
      currentPage:0,
      pageSize:25,
-     sortByField:"timeframe",
+     sortByField:"released",
      sortOrder:"desc"
    };
 
@@ -148,12 +148,12 @@ clearClickEvent(event: any)
    this.setInitialFilterObject();
 
    this.sort.sort({ id: '', start: 'desc', disableClear: false });
-   this.sort.sort({ id: 'timeframe', start: 'desc', disableClear: false });
-   (this.sort.sortables.get('timeframe') as MatSortHeader)._setAnimationTransitionState({ toState: 'active' });
+   this.sort.sort({ id: 'released', start: 'desc', disableClear: false });
+   (this.sort.sortables.get('released') as MatSortHeader)._setAnimationTransitionState({ toState: 'active' });
 
    console.log(this.filterObject);
    console.log(this.searchObject);    
-   this.loadData();    
+   this.loadData();
  }
 
  // Main load data method
@@ -222,7 +222,6 @@ clearClickEvent(event: any)
  
      this.dialog.open(BloomViewComponent, dialogConfig);
    }
-   
 
 
   openNewMovieDialog()
@@ -240,8 +239,8 @@ clearClickEvent(event: any)
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '90%';
-    dialogConfig.minHeight = 'calc(100vh - 100px)';
+    dialogConfig.width = '50%';
+    dialogConfig.minHeight = 'calc(100vh - 400px)';
     dialogConfig.height = 'auto';
     return dialogConfig;
   }

@@ -1,11 +1,12 @@
 ﻿using DotnetCore.Neo4j.Angular.DataAccess;
+using DotnetCore.Neo4j.Angular.Entities.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetCore.Neo4j.Angular.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonsController : ControllerBase
+    public class PersonsController : Controller
     {
         /// <summary>
         /// The logger
@@ -39,6 +40,20 @@ namespace DotnetCore.Neo4j.Angular.Api.Controllers
         {
             _logger.LogInformation($"Person search with search string: {searchString}");
             return await _personRepository.SearchPersonsByName(searchString);
+        }
+
+
+        /// <summary>
+        /// Test Post Person
+        /// </summary>
+        /// <param name="filterObject"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("postPerson")]
+        public async Task<ActionResult<Person>> PostPerson([FromBody] Person person)
+        {
+            _logger.LogInformation("Test post person method");
+            return Ok(person);
         }
     }
 }

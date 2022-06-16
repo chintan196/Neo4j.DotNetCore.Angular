@@ -1,6 +1,6 @@
 <mat-form-field  appearance="outline" [class]="formFieldClass">
     <mat-label>{{controlLabel}}</mat-label>
-    <input matInput class="form-control form-field" aria-label="State" [formControl]="searchControl" [matAutocomplete]="auto">
+    <input matInput class="form-control form-field" aria-label="State" autocomplete="off" [formControl]="searchControl" [matAutocomplete]="auto">
     <button *ngIf="value.name" matSuffix mat-icon-button aria-label="Clear" (click)="clearValue($event)">
       <mat-icon>close</mat-icon>
     </button>

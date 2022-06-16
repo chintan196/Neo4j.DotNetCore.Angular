@@ -14,7 +14,7 @@
             <div class="col">
                 <mat-form-field  appearance="outline" class="search-control">
                     <mat-label>Movie Title</mat-label>
-                    <input type="text" class="form-control form-field" matInput [(ngModel)]="filterObject.title">
+                    <input type="text" class="form-control form-field" autocomplete="off" matInput [(ngModel)]="filterObject.title">
                     <button *ngIf="filterObject.title" matSuffix mat-icon-button aria-label="Clear" (click)="filterObject.title=''">
                       <mat-icon>close</mat-icon>
                     </button>
@@ -22,8 +22,8 @@
             </div>
             <div class="col">
                 <mat-form-field  appearance="outline" class="search-control">
-                    <mat-label>Released Year</mat-label>
-                    <input type="text" class="form-control form-field" matInput [(ngModel)]="filterObject.released">
+                    <mat-label>Release Year</mat-label>
+                    <input type="text" class="form-control form-field" autocomplete="off" matInput [(ngModel)]="filterObject.released">
                     <button *ngIf="filterObject.released" matSuffix mat-icon-button aria-label="Clear" (click)="filterObject.released">
                       <mat-icon>close</mat-icon>
                     </button>
@@ -35,17 +35,17 @@
                 <mat-select [(ngModel)]="filterObject.personType">
                   <mat-option *ngFor="let personType of masterData.personTypes" [value]="personType">{{personType}}</mat-option>
                 </mat-select>
-                <button *ngIf="filterObject.personType != null" matSuffix mat-icon-button aria-label="Clear" (click)="filterObject.personType==null">
+                <button *ngIf="filterObject.personType != null" matSuffix mat-icon-button aria-label="Clear" (click)="filterObject.personType=''">
                   <mat-icon>close</mat-icon>
                 </button>
               </mat-form-field>
             </div>
             <div class="col">
-                <app-auto-complete-search #agentSearch [searchApiUrl]="personSearchUrl" controlLabel="Agent Name" formFieldClass="search-control" [(value)]="filterObject.person">
+                <app-auto-complete-search #personSearch [searchApiUrl]="personSearchUrl" controlLabel="Person Name" formFieldClass="search-control" [(value)]="filterObject.person">
                 </app-auto-complete-search>
             </div>
           </div>
-          <div class="row" style="padding-top: 5px;">
+          <div class="row" style="padding-top: 5px; padding-bottom: 10px;">
             <div class="col">
             </div>
             <div class="col">
@@ -63,7 +63,7 @@
       <div class="mat-elevation-z8">
         <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>  
         <div class="table-container">  
-          <table mat-table [dataSource]="movies" matSort (matSortChange)="sortData($event)" matSortActive="timeframe" matSortDirection="desc" matSortDisableClear>
+          <table mat-table [dataSource]="movies" matSort (matSortChange)="sortData($event)" matSortActive="released" matSortDirection="desc" matSortDisableClear>
             <ng-container matColumnDef="bloomView">
               <th mat-header-cell *matHeaderCellDef style="padding-left: 10px;">
               </th>
@@ -80,7 +80,7 @@
             
             <ng-container matColumnDef="released">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                Release Year
+                Released
               </th>
               <td mat-cell *matCellDef="let element"> {{element.released}} </td>
             </ng-container>

@@ -7,7 +7,7 @@ namespace DotnetCore.Neo4j.Angular.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MoviesController : ControllerBase
+    public class MoviesController : Controller
     {
         private readonly ILogger<MoviesController> _logger;
 

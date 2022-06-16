@@ -89,31 +89,11 @@ namespace DotnetCore.Neo4j.Angular.DataAccess
         {
             IDictionary<string, object> parameters = new Dictionary<string, object>();
 
-            var match = @"Match (m:Movie)<-[:PRODUCED]-(prod:Person)
-                            OPTIONAL MATCH (m)<-[:DIRECTED]-(dir:Person) 
-                            OPTIONAL MATCH (m)<-[:WROTE]-(w:Person) ";
+            var match = new StringBuilder(@"Match (m:Movie) ");
 
             var filter = new StringBuilder(@" WHERE 1 = 1 ");
 
-            if (filterObject.Director != null && !string.IsNullOrWhiteSpace(filterObject.Director?.Name))
-            {                
-                filter.Append(" AND toUpper(dir.name) CONTAINS toUpper($director)");
-                parameters.Add("director", filterObject.Director.Name);
-            }
-
-            if (filterObject.Writer != null && !string.IsNullOrWhiteSpace(filterObject.Writer?.Name))
-            {
-                filter.Append(" AND toUpper(w.name) CONTAINS toUpper($writer)");
-                parameters.Add("writer", filterObject.Writer.Name);
-            }
-
-            if (filterObject.Producer != null && !string.IsNullOrWhiteSpace(filterObject.Producer?.Name))
-            {
-                filter.Append(" AND toUpper(prod.name) CONTAINS toUpper($producer)");
-                parameters.Add("producer", filterObject.Producer.Name);
-            }
-
-            if (filterObject.Released != 0)
+            if (filterObject.Released != null)
             {
                 filter.Append(" AND m.released = $released ");
                 parameters.Add("released", filterObject.Released);
@@ -125,22 +105,66 @@ namespace DotnetCore.Neo4j.Angular.DataAccess
                 parameters.Add("title", filterObject.Title);
             }
 
-            var withClause = @" WITH m, collect(distinct dir.name) as dirNames, collect(distinct w.name) as wNames, collect(distinct prod.name) as prodNames ";
+            // Append movie filter
+            match.Append(filter);
+
+            match.Append(@" OPTIONAL MATCH (m)<-[:DIRECTED]-(dir:Person)
+                            OPTIONAL MATCH (m)<-[:PRODUCED]-(prod:Person)
+                            OPTIONAL MATCH (m)<-[:WROTE]-(w:Person) 
+                            WITH m, collect(distinct coalesce(dir.name,null)) as dirNames, collect(distinct coalesce(w.name,null)) as wNames, 
+                            collect(distinct coalesce(prod.name, null)) as prodNames WITH m, apoc.text.join(dirNames, ', ') as director, 
+                            apoc.text.join(prodNames, ', ') as producer, apoc.text.join(wNames, ', ') as writer ");
+
+            filter = new StringBuilder(@" WHERE (1 = 1) ");
+
+            var conjuction = "AND";
+
+            // Adding more conditions for related entities
+            if (filterObject.Director != null && !string.IsNullOrWhiteSpace(filterObject.Director?.Name))
+            {   
+                filter.Append($" {conjuction} toUpper(director) CONTAINS toUpper($director) ");
+                parameters.Add("director", filterObject.Director.Name);
+            }
+
+            if (filterObject.Producer != null && !string.IsNullOrWhiteSpace(filterObject.Producer?.Name))
+            {
+                if (filterObject.Writer != null || filterObject.Director != null)
+                {
+                    conjuction = "OR";
+                }
+
+                filter.Append($" {conjuction} toUpper(producer) CONTAINS toUpper($producer) ");
+                parameters.Add("producer", filterObject.Producer.Name);
+            }
+
+            if (filterObject.Writer != null && !string.IsNullOrWhiteSpace(filterObject.Writer?.Name))
+            {
+                if (filterObject.Director != null || filterObject.Producer != null)
+                {
+                    conjuction = "OR";
+                }
+
+                filter.Append($" {conjuction} toUpper(writer) CONTAINS toUpper($writer) ");
+                parameters.Add("writer", filterObject.Writer.Name);
+            }
+
+            // Append filter to the match clause
+            match.Append(filter);            
 
             var results = countOnly ? " RETURN COUNT(m) " : @" RETURN m { title: m.title, tagLine: m.tagline, released: m.released,
-                                                                director: apoc.text.join(dirNames, ', '),
-                                                                producer: apoc.text.join(prodNames, ', '),
-                                                                writer: apoc.text.join(wNames, ', ') }  ";
+                                                                director: director,
+                                                                producer: producer,
+                                                                writer: writer }  ";
 
-            var orderBy = filterObject.SortByField;
+            var orderBy = filterObject.SortByField ?? "title";
 
-            var format = countOnly ? string.Empty : $" ORDER BY m.{orderBy} {filterObject.SortOrder} SKIP $skip  LIMIT $limit; ";
+            var format = countOnly ? string.Empty : $" ORDER BY m.{orderBy} {filterObject.SortOrder ?? "asc"} SKIP $skip  LIMIT $limit; ";
 
             parameters.Add("skip", (filterObject.PageSize == 0 ? 25 : filterObject.PageSize) * filterObject.CurrentPage);
 
             parameters.Add("limit", filterObject.PageSize == 0 ? 25 : filterObject.PageSize);
 
-            var query = $" {match} {filter} {withClause} {results} {format} ";
+            var query = $" {match} {results} {format} ";
 
             return Tuple.Create(query, parameters);
         }

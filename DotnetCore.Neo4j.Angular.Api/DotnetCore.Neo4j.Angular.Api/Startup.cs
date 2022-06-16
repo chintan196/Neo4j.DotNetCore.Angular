@@ -3,6 +3,7 @@ using DotnetCore.Neo4j.Angular.Entities.Common;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 
 namespace DotnetCore.Neo4j.Angular.Api
 {

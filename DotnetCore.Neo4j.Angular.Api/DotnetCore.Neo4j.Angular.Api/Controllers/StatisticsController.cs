@@ -5,7 +5,7 @@ namespace DotnetCore.Neo4j.Angular.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StatisticsController : ControllerBase
+    public class StatisticsController : Controller
     {
         /// <summary>
         /// The logger

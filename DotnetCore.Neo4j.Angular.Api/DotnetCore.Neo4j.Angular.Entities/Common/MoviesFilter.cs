@@ -8,31 +8,31 @@ namespace DotnetCore.Neo4j.Angular.Entities.Common
         /// Gets or sets the Director.
         /// </summary>
         /// <value>The director.</value>
-        public Person Director { get; set; }
+        public Person? Director { get; set; }
         
         /// <summary>
         /// Gets or sets the Producer.
         /// </summary>
         /// <value>The producer.</value>
-        public Person Producer { get; set; }
+        public Person? Producer { get; set; }
 
         /// <summary>
         /// Gets or sets the Writer.
         /// </summary>
         /// <value>The writer.</value>
-        public Person Writer { get; set; }
+        public Person? Writer { get; set; }
 
         /// <summary>
         /// Gets or sets the movie title.
         /// </summary>
         /// <value>The movie release year.</value>
-        public int Released { get; set; }
+        public int? Released { get; set; }
 
         /// <summary>
         /// Gets or sets the movie title.
         /// </summary>
         /// <value>The movie title.</value>
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         /// <summary>
         /// Gets or sets the size of the page.
@@ -48,11 +48,11 @@ namespace DotnetCore.Neo4j.Angular.Entities.Common
         /// Gets or sets the sort by field.
         /// </summary>
         /// <value>The sort by field.</value>
-        public string SortByField { get; set; }
+        public string? SortByField { get; set; }
         /// <summary>
         /// Gets or sets the sort order.
         /// </summary>
         /// <value>The sort order.</value>
-        public string SortOrder { get; set; }
+        public string? SortOrder { get; set; }
     }
 }
