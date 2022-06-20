@@ -1,4 +1,5 @@
 ﻿using DotnetCore.Neo4j.Angular.DataAccess.Neo4j;
+using DotnetCore.Neo4j.Angular.Entities.Domain;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -42,6 +43,25 @@ namespace DotnetCore.Neo4j.Angular.DataAccess
             var persons = await _neo4jDataAccess.ExecuteReadDictionaryAsync(query, "p", parameters);
 
             return persons;
+        }
+
+        /// <summary>
+        /// Adds a new person
+        /// </summary>
+        /// <param name="person">Person object</param>
+        /// <returns>Boolean to indicate of person save was successful or not.</returns>
+        public async Task<bool> AddPerson(Person person)
+        {
+            if (person != null && !string.IsNullOrWhiteSpace(person.Name))
+            {
+                var query = @"MERGE (p:Person {name: $name}) ON CREATE SET p.born = $born ON MATCH SET p.born = $born, p.updatedAt = timestamp() RETURN true";
+                IDictionary<string, object> parameters = new Dictionary<string, object> { { "name", person.Name }, { "born", person.Born ?? 0 } };
+                return await _neo4jDataAccess.ExecuteWriteTransactionAsync<bool>(query, parameters);
+            }
+            else
+            {
+                throw new System.ArgumentNullException(nameof(person), "Person must not be null");
+            }
         }
 
         /// <summary>

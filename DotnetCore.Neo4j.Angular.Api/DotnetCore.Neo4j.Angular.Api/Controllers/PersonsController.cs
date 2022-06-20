@@ -44,15 +44,21 @@ namespace DotnetCore.Neo4j.Angular.Api.Controllers
 
 
         /// <summary>
-        /// Test Post Person
+        /// Add a new person
         /// </summary>
-        /// <param name="filterObject"></param>
-        /// <returns></returns>
+        /// <param name="person"></param>
+        /// <returns>True/False</returns>
         [HttpPost]
-        [Route("postPerson")]
-        public async Task<ActionResult<Person>> PostPerson([FromBody] Person person)
+        [Route("Add")]
+        public async Task<ActionResult<bool>> AddPerson([FromBody] Person person)
         {
-            _logger.LogInformation("Test post person method");
+            if(person == null || string.IsNullOrWhiteSpace(person.Name))
+            {
+                return BadRequest("Please provide a valid name for the person");
+            }
+
+            var result = await _personRepository.AddPerson(person);
+
             return Ok(person);
         }
     }

@@ -49,7 +49,7 @@ namespace DotnetCore.Neo4j.Angular.DataAccess.Neo4j
         /// <param name="returnObjectKey">The return object key.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>A Task&lt;List`1&gt; representing the asynchronous operation.</returns>
-        public async Task<List<string>> ExecuteReadListAsync(string query, string returnObjectKey, IDictionary<string, object> parameters = null)
+        public async Task<List<string>> ExecuteReadListAsync(string query, string returnObjectKey, IDictionary<string, object>? parameters = null)
         {
             return await ExecuteReadTransactionAsync<string>(query, returnObjectKey, parameters);
         }
@@ -61,7 +61,7 @@ namespace DotnetCore.Neo4j.Angular.DataAccess.Neo4j
         /// <param name="returnObjectKey">The return object key.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>A Task&lt;List`1&gt; representing the asynchronous operation.</returns>
-        public async Task<List<Dictionary<string, object>>> ExecuteReadDictionaryAsync(string query, string returnObjectKey, IDictionary<string, object> parameters = null)
+        public async Task<List<Dictionary<string, object>>> ExecuteReadDictionaryAsync(string query, string returnObjectKey, IDictionary<string, object>? parameters = null)
         {
             return await ExecuteReadTransactionAsync<Dictionary<string, object>>(query, returnObjectKey, parameters);
         }
@@ -72,8 +72,8 @@ namespace DotnetCore.Neo4j.Angular.DataAccess.Neo4j
         /// <typeparam name="T"></typeparam>
         /// <param name="query">The query.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>A Task&lt;T&gt; representing the asynchronous operation.</returns>
-        public async Task<T> ExecuteReadScalarAsync<T>(string query, IDictionary<string, object> parameters = null)
+        /// <returns>A Task representing the asynchronous operation.</returns>
+        public async Task<T> ExecuteReadScalarAsync<T>(string query, IDictionary<string, object>? parameters = null)
         {
             try
             {
@@ -100,14 +100,47 @@ namespace DotnetCore.Neo4j.Angular.DataAccess.Neo4j
         }
 
         /// <summary>
+        /// Execute write transaction
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query">The query.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>A Task that returns a scalar upon completion, either return a boolean or a single system data type value</returns>
+        public async Task<T> ExecuteWriteTransactionAsync<T>(string query, IDictionary<string, object>? parameters = null)
+        {
+            try
+            {
+                parameters = parameters == null ? new Dictionary<string, object>() : parameters;
+
+                var result = await _session.WriteTransactionAsync(async tx =>
+                {
+                    T scalar = default(T);
+
+                    var res = await tx.RunAsync(query, parameters);
+
+                    scalar = (await res.SingleAsync())[0].As<T>();
+
+                    return scalar;
+                });
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "There was an exception while making database query");
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Execute read transaction as an asynchronous operation.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="query">The query.</param>
         /// <param name="returnObjectKey">The return object key.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>A Task&lt;List`1&gt; representing the asynchronous operation.</returns>
-        private async Task<List<T>> ExecuteReadTransactionAsync<T>(string query, string returnObjectKey, IDictionary<string, object> parameters)
+        /// <returns>A Task representing the asynchronous operation that returns List<T> on completion.</returns>
+        private async Task<List<T>> ExecuteReadTransactionAsync<T>(string query, string returnObjectKey, IDictionary<string, object>? parameters)
         {
             try
             {                
